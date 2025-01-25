@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>ECG Analysis</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png,.jpg,.jpeg">
+        <input type="submit" value="Upload and Analyze">
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if uploaded_image %}
+        <h2>Uploaded Image</h2>
+        <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" alt="Uploaded ECG">
+
+        <h2>Gray Scale Image</h2>
+        <img src="{{ url_for('static', filename=gray_image) }}" alt="Gray Scale ECG">
+
+        <h2>Divided Leads</h2>
+        <img src="{{ url_for('static', filename=divided_leads) }}" alt="Divided Leads">
+        <img src="{{ url_for('static', filename=long_lead) }}" alt="Long Lead">
+
+        <h2>Preprocessed Leads</h2>
+        <img src="{{ url_for('static', filename=preprocessed_leads) }}" alt="Preprocessed Leads">
+        <img src="{{ url_for('static', filename=preprocessed_lead_13) }}" alt="Preprocessed Lead 13">
+
+        <h2>Contour Leads</h2>
+        <img src="{{ url_for('static', filename=contour_leads) }}" alt="Contour Leads">
+
+        <h2>Prediction</h2>
+        <p>{{ prediction }}</p>
+    {% endif %}
+</body>
+</html>
+
